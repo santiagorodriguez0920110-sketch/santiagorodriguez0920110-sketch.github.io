@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Mi Amada Luisa 💛 21 de Septiembre</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Great+Vibes&family=Playfair+Display:ital,wght@0,600;0,800;1,400&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Canvas Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #fffdf0 0%, #fef3c7 40%, #fef08a 100%);
+            color: #451a03;
+            overflow-x: hidden;
+            user-select: none;
+            cursor: default;
+        }
+
+        .font-serif-title {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .font-handwriting {
+            font-family: 'Dancing Script', cursive;
+        }
+
+        .font-romantic {
+            font-family: 'Great Vibes', cursive;
+        }
+
+        /* Mouse trail effect with SVG vector flowers */
+        .trail-flower {
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            width: 24px;
+            height: 24px;
+            animation: fadeAndFly 1.2s forwards ease-out;
+        }
+
+        @keyframes fadeAndFly {
+            0% {
+                opacity: 1;
+                transform: scale(0.5) translateY(0) rotate(0deg);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(1.6) translateY(-35px) rotate(180deg);
+            }
+        }
+
+        @keyframes pulseSlow {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes glow {
+            0%, 100% { filter: drop-shadow(0 0 10px rgba(234, 179, 8, 0.6)); }
+            50% { filter: drop-shadow(0 0 25px rgba(250, 204, 21, 0.9)); }
+        }
+
+        .animate-pulse-slow {
+            animation: pulseSlow 3s infinite ease-in-out;
+        }
+
+        .glow-effect {
+            animation: glow 3s infinite;
+        }
+
+        /* Glassmorphic cards */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(254, 240, 138, 0.8);
+            box-shadow: 0 15px 35px -5px rgba(217, 119, 6, 0.15);
+        }
+
+        .glass-card-darker {
+            background: rgba(254, 243, 199, 0.92);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(250, 204, 21, 0.6);
+        }
+
+        /* 3D Flip Card Effect */
+        .flip-card {
+            background-color: transparent;
+            perspective: 1000px;
+        }
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.7s cubic-bezier(0.4, 0.2, 0.2, 1);
+            transform-style: preserve-3d;
+        }
+
+        .flip-card.flipped .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 1.25rem;
+        }
+
+        .flip-card-back {
+            transform: rotateY(180deg);
+        }
+
+        /* Interactive Envelope styling */
+        .envelope-wrapper {
+            position: relative;
+            cursor: pointer;
+            perspective: 1000px;
+        }
+
+        .envelope {
+            position: relative;
+            width: 100%;
+            max-width: 540px;
+            height: 310px;
+            margin: 0 auto;
+            background-color: #fef08a;
+            border-radius: 14px;
+            box-shadow: 0 20px 40px rgba(217, 119, 6, 0.25);
+            transition: all 0.5s ease;
+        }
+
+        .envelope-flap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-left: 270px solid transparent;
+            border-right: 270px solid transparent;
+            border-top: 165px solid #fde047;
+            transform-origin: top;
+            transition: transform 0.6s ease 0.3s, z-index 0.2s 0.4s;
+            z-index: 4;
+        }
+
+        @media (max-width: 580px) {
+            .envelope {
+                height: 270px;
+            }
+            .envelope-flap {
+                border-left-width: 44vw;
+                border-right-width: 44vw;
+                border-top-width: 145px;
+            }
+        }
+
+        .envelope-pocket {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-left: 270px solid #fef08a;
+            border-right: 270px solid #fef08a;
+            border-bottom: 165px solid #facc15;
+            border-radius: 0 0 14px 14px;
+            z-index: 3;
+        }
+
+        @media (max-width: 580px) {
+            .envelope-pocket {
+                border-left-width: 44vw;
+                border-right-width: 44vw;
+                border-bottom-width: 145px;
+            }
+        }
+
+        .envelope-letter {
+            position: absolute;
+            bottom: 10px;
+            left: 5%;
+            width: 90%;
+            height: 270px;
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.08);
+            transition: transform 0.8s ease 0.5s, z-index 0.1s 0.8s, height 0.8s ease;
+            z-index: 2;
+            overflow: hidden;
+        }
+
+        .envelope-wrapper.open .envelope-flap {
+            transform: rotateX(180deg);
+            z-index: 1;
+        }
+
+        .envelope-wrapper.open .envelope-letter {
+            transform: translateY(-190px);
+            z-index: 5;
+            height: auto;
+            min-height: 520px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.18);
+        }
+
+        /* Timeline Styles */
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -19px;
+            top: 6px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: #f59e0b;
+            border: 2px solid #ffffff;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #fef9c3;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #facc15;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #eab308;
+        }
+    </style>
+</head>
+<body class="min-h-screen relative pb-24">
+
+    <!-- PUNTO 10: Lluvia Animada de Pétalos y Destellos en Canvas CSS/JS -->
+    <canvas id="petals-canvas" class="fixed inset-0 pointer-events-none z-0"></canvas>
+
+    <!-- Audio Player Element (Audio MP3 de Canción de Amor en Español) -->
+    <audio id="spanish-love-song" preload="metadata">
+        <!-- Canción romántica en español: "Bésame Mucho" (Instrumental Guitar/Romantic Strings MP3) -->
+        <source src="https://cdn.pixabay.com/download/audio/2022/11/06/audio_c0d29dbe66.mp3?filename=spanish-guitar-romantic-love-126297.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- PUNTO 8: Reproductor Flotante de Música de Amor en Español con Controles Personalizados -->
+    <div class="fixed top-4 right-4 z-50 flex items-center gap-3 bg-white/95 backdrop-blur-md px-4 py-2.5 rounded-full shadow-2xl border border-amber-300 transition-all hover:scale-105">
+        <button id="music-play-btn" class="w-10 h-10 rounded-full bg-amber-400 text-amber-950 flex items-center justify-center hover:bg-amber-300 transition-all shadow-md">
+            <i id="music-play-icon" class="fas fa-play text-sm ml-0.5"></i>
+        </button>
+        <div class="text-xs pr-2 max-w-[170px] sm:max-w-[210px]">
+            <p class="font-bold text-amber-950 truncate" id="music-song-title">Guitarra de Amor 💛</p>
+            <p class="text-amber-800 text-[10px]" id="music-song-artist">Canción Romántica en Español</p>
+            <!-- Progress Bar -->
+            <div class="w-full bg-amber-200 h-1 rounded-full mt-1.5 overflow-hidden cursor-pointer" id="music-progress-container">
+                <div id="music-progress-bar" class="bg-amber-600 h-full w-0 transition-all duration-200"></div>
+            </div>
+        </div>
+        <div class="flex items-center gap-1.5 border-l border-amber-200 pl-2">
+            <i class="fas fa-volume-up text-amber-700 text-xs"></i>
+            <input type="range" id="music-volume" min="0" max="1" step="0.1" value="0.7" class="w-12 h-1 accent-amber-500 cursor-pointer">
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <main class="relative z-10 max-w-5xl mx-auto px-4 pt-10 space-y-20">
+
+        <!-- Header / Banner Section -->
+        <section class="text-center space-y-6 pt-4">
+            <div class="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-amber-200/90 text-amber-950 text-xs md:text-sm font-semibold tracking-wide border border-yellow-300 shadow-sm animate-bounce">
+                <!-- SVG Sun Icon -->
+                <svg class="w-4 h-4 fill-amber-600" viewBox="0 0 24 24"><path d="M12 4.5a7.5 7.5 0 100 15 7.5 7.5 0 000-15zM12 2a10 10 0 110 20 10 10 0 010-20zm0-2a1 1 0 011 1v1a1 1 0 11-2 0V1a1 1 0 011-1zm0 22a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zm12-11a1 1 0 01-1 1h-1a1 1 0 110-2h1a1 1 0 011 1zM3 12a1 1 0 01-1 1H1a1 1 0 110-2h1a1 1 0 011 1z"/></svg>
+                <span>21 de Septiembre • Día de las Flores Amarillas</span>
+                <!-- SVG Heart Icon -->
+                <svg class="w-4 h-4 fill-amber-600" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+            </div>
+
+            <h1 class="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-serif-title font-black text-amber-950 leading-tight">
+                Para Mi Amada Luisa <br>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-600 font-romantic text-6xl sm:text-8xl lg:text-9xl font-normal drop-shadow-sm">
+                    Feliz 21 de Septiembre
+                </span>
+            </h1>
+
+            <p class="max-w-2xl mx-auto text-amber-900 text-base md:text-xl font-light leading-relaxed">
+                Hoy el mundo entero se tiñe de amarillo para celebrar la primavera y el amor, pero para mí no hay sol ni flor más radiante que tú, Luisa.
+            </p>
+
+            <!-- PUNTO 3: Contador de Tiempo y Afecto Juntos -->
+            <div class="glass-card max-w-xl mx-auto p-6 rounded-3xl border border-yellow-300 shadow-xl mt-8">
+                <div class="flex items-center justify-center gap-2 mb-3">
+                    <svg class="w-5 h-5 fill-amber-600" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm.5-13H11v6l5.2 3.2.8-1.3-4.5-2.7V7z"/></svg>
+                    <p class="text-amber-900 font-bold text-xs md:text-sm uppercase tracking-wider">
+                        Tiempo Iluminando Mi Vida, Luisa
+                    </p>
+                </div>
+                <div class="grid grid-cols-4 gap-2 sm:gap-4 text-center">
+                    <div class="bg-amber-100/90 p-3 rounded-2xl border border-amber-200 shadow-sm">
+                        <span id="days" class="block text-2xl md:text-4xl font-extrabold text-amber-950">0</span>
+                        <span class="text-[10px] sm:text-xs text-amber-800 font-medium uppercase">Días</span>
+                    </div>
+                    <div class="bg-amber-100/90 p-3 rounded-2xl border border-amber-200 shadow-sm">
+                        <span id="hours" class="block text-2xl md:text-4xl font-extrabold text-amber-950">0</span>
+                        <span class="text-[10px] sm:text-xs text-amber-800 font-medium uppercase">Horas</span>
+                    </div>
+                    <div class="bg-amber-100/90 p-3 rounded-2xl border border-amber-200 shadow-sm">
+                        <span id="minutes" class="block text-2xl md:text-4xl font-extrabold text-amber-950">0</span>
+                        <span class="text-[10px] sm:text-xs text-amber-800 font-medium uppercase">Minutos</span>
+                    </div>
+                    <div class="bg-amber-100/90 p-3 rounded-2xl border border-amber-200 shadow-sm">
+                        <span id="seconds" class="block text-2xl md:text-4xl font-extrabold text-amber-950">0</span>
+                        <span class="text-[10px] sm:text-xs text-amber-800 font-medium uppercase">Segundos</span>
+                    </div>
+                </div>
+                <p class="text-xs text-amber-700 mt-4 italic font-serif">"Cada segundo a tu lado, Luisa, vale más que el universo entero."</p>
+            </div>
+        </section>
+
+        <!-- PUNTO 1: Carta de Amor dentro de un sobre 3D animado con el párrafo de perdón -->
+        <section class="py-6">
+            <div class="text-center mb-8">
+                <span class="text-xs font-bold text-amber-700 tracking-widest uppercase">Mensaje Directo al Corazón</span>
+                <h2 class="text-3xl md:text-5xl font-serif-title font-bold text-amber-950 mt-1">
+                    Carta de Amor Para Luisa 💌
+                </h2>
+                <p class="text-amber-800 text-sm mt-1">Haz clic sobre el sobre para abrir el sello de amor</p>
+            </div>
+
+            <div class="envelope-wrapper my-8" id="envelope">
+                <div class="envelope">
+                    <div class="envelope-flap"></div>
+                    <div class="envelope-pocket"></div>
+                    <div class="envelope-letter space-y-4 text-amber-950 overflow-y-auto">
+                        <div class="text-center border-b border-amber-200 pb-3">
+                            <h3 class="font-handwriting text-3xl font-bold text-amber-900">Mi amada Luisa,</h3>
+                            <p class="text-xs text-amber-700">21 de Septiembre • Día de las Flores Amarillas</p>
+                        </div>
+
+                        <p class="text-sm md:text-base leading-relaxed text-slate-800 font-serif">
+                            Hoy, 21 de septiembre, es un día en el que el mundo entero celebra la belleza de la primavera y la llegada de la calidez. Sin embargo, para mí no hay flores ni primavera más hermosa que la luz que tú, Luisa, trajiste a mi vida desde el primer instante.
+                        </p>
+
+                        <!-- Parrofo Obligatorio de Perdon -->
+                        <div class="bg-amber-50 p-4 rounded-xl border-l-4 border-amber-500 text-sm md:text-base leading-relaxed text-amber-950 font-serif my-2 shadow-inner">
+                            <p class="font-bold text-amber-900 mb-1 flex items-center gap-2">
+                                <svg class="w-4 h-4 fill-amber-600" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                                Una nota sincera desde mi alma, mi Luisa:
+                            </p>
+                            Quiero pedirte perdón de todo corazón por no haber podido entregarte flores amarillas reales y físicas en este 21 de septiembre. Me dolió no estar ahí para poner en tus manos ese ramo lleno de color y ver tu sonrisa en persona. Por eso quise construir con mis propias manos este rincón digital pensado únicamente para ti, Luisa. Estas flores amarillas no están hechas de pétalos que se marchitarán en unos días; están hechas de código, de pensamientos llenos de ti y de un amor infinito que jamás se apagará.
+                        </div>
+
+                        <p class="text-sm md:text-base leading-relaxed text-slate-800 font-serif">
+                            El color amarillo simboliza la energía brillante del sol, la lealtad eterna y la alegría más pura. Eso es exactamente lo que significas en mi vida: eres mi paz, mi refugio y el motivo más bonito por el cual sonrío cada mañana.
+                        </p>
+
+                        <p class="text-sm md:text-base leading-relaxed text-slate-800 font-serif">
+                            Prometo darte todas las flores reales del mundo cada vez que estemos juntos, pero sobre todo, prometo cuidar tu corazón con la misma delicadeza con la que se cuida la flor más valiosa del universo.
+                        </p>
+
+                        <div class="pt-4 border-t border-amber-200 text-right">
+                            <p class="font-handwriting text-2xl text-amber-900 font-bold">Por siempre tuyo, mi amor 🌻</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PUNTO 2: Jardín/Ramo de Flores Amarillas Interactivo -->
+        <section class="glass-card rounded-3xl p-6 md:p-10 border border-yellow-300 relative overflow-hidden shadow-2xl">
+            <div class="text-center mb-8">
+                <span class="text-xs font-bold text-amber-700 tracking-widest uppercase">Jardín Eterno para Luisa</span>
+                <h2 class="text-3xl md:text-5xl font-serif-title font-bold text-amber-950 mt-1">
+                    Tu Ramo de Flores Amarillas Infinito 🌻
+                </h2>
+                <p class="text-amber-800 text-sm md:text-base mt-2">
+                    Toca cada flor vectorial para verla florecer y entregar un mensaje secreto guardado para ti.
+                </p>
+            </div>
+
+            <!-- Flower Grid with Vector Graphics -->
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6" id="flower-garden">
+                <!-- Dynamically generated -->
+            </div>
+
+            <!-- Message Display Box -->
+            <div id="flower-message-box" class="mt-8 p-6 bg-amber-50/95 border-2 border-dashed border-amber-400 rounded-2xl text-center hidden transform transition-all duration-300 shadow-md">
+                <svg class="w-8 h-8 fill-amber-400 mx-auto mb-2" viewBox="0 0 24 24"><path d="M6 17h3l2-4V7H5v6h3zm8 0h3l2-4V7h-6v6h3z"/></svg>
+                <p id="flower-message-text" class="text-amber-950 font-serif-title text-xl md:text-2xl italic font-semibold">
+                    Haz clic en cualquier flor para revelar su secreto.
+                </p>
+                <div class="mt-4 flex justify-center items-center gap-2">
+                    <span id="flower-badge" class="px-4 py-1 bg-amber-200 text-amber-950 text-xs rounded-full font-bold">Flor Especial</span>
+                </div>
+            </div>
+
+            <div class="text-center mt-8">
+                <button id="btn-bloom-all" class="px-8 py-3.5 bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 text-amber-950 font-extrabold rounded-full shadow-lg hover:shadow-2xl hover:scale-105 active:scale-95 transition-all flex items-center gap-3 mx-auto">
+                    <svg class="w-5 h-5 fill-amber-950" viewBox="0 0 24 24"><path d="M12 2L9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2z"/></svg>
+                    <span>¡Hacer florecer todo tu ramo juntos, Luisa!</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- PUNTO 4: Tarjetas de Amor 3D (Flip Cards) -->
+        <section class="space-y-8">
+            <div class="text-center">
+                <span class="text-xs font-bold text-amber-700 tracking-widest uppercase">Razones Infinitas</span>
+                <h2 class="text-3xl md:text-5xl font-serif-title font-bold text-amber-950 mt-1">
+                    ¿Por Qué Eres Mi Flor Favorita, Luisa? 🌼
+                </h2>
+                <p class="text-amber-800 text-sm mt-1">Toca cada tarjeta para voltearla y descubrir el motivo</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="reasons-grid">
+                <!-- Dynamically populated -->
+            </div>
+        </section>
+
+        <!-- PUNTO 9: "Nuestra Historia en Capítulos" - Acordeón / Línea de Tiempo -->
+        <section class="glass-card rounded-3xl p-6 md:p-10 border border-yellow-300 shadow-xl space-y-6">
+            <div class="text-center mb-6">
+                <span class="text-xs font-bold text-amber-700 tracking-widest uppercase">Capítulos de Amor</span>
+                <h2 class="text-3xl md:text-5xl font-serif-title font-bold text-amber-950 mt-1">
+                    Nuestra Historia Juntos, Luisa 📖
+                </h2>
+                <p class="text-amber-800 text-sm mt-1">Haz clic en cada momento para abrir nuestra memoria</p>
+            </div>
+
+            <div class="space-y-4 max-w-3xl mx-auto" id="timeline-accordion">
+                <!-- Dynamically rendered chapters -->
+            </div>
+        </section>
+
+        <!-- PUNTO 5: Minijuego "Atrapa tus Flores Amarillas" -->
+        <section class="glass-card rounded-3xl p-6 md:p-8 border border-yellow-300 relative shadow-2xl">
+            <div class="text-center mb-6">
+                <span class="text-xs font-bold text-amber-700 tracking-widest uppercase">Atrapa la Primavera</span>
+                <h2 class="text-2xl md:text-4xl font-serif-title font-bold text-amber-950">
+                    Minijuego: Cosecha Tu Ramo, Luisa 🌻
+                </h2>
+                <p class="text-amber-800 text-sm mt-1">Atrapa las flores amarillas vectoriales antes de que se agote el tiempo (se supone que los circulos son las flores amor)</p>
+            </div>
+
+            <div class="flex justify-between items-center bg-amber-100/90 px-6 py-3 rounded-2xl max-w-md mx-auto mb-6 text-amber-950 font-bold text-sm border border-amber-200 shadow-sm">
+                <div>Puntos: <span id="game-score" class="text-amber-600 text-2xl font-black">0</span></div>
+                <div>Combo: <span id="game-combo" class="text-amber-600 text-xl font-bold">x1</span></div>
+                <div>Tiempo: <span id="game-timer" class="text-amber-600 text-2xl font-black">20</span>s</div>
+            </div>
+
+            <!-- Area for Mini-Game -->
+            <div id="game-container" class="relative w-full h-72 md:h-96 bg-gradient-to-b from-amber-50 to-yellow-100 rounded-2xl border-2 border-yellow-300 overflow-hidden cursor-crosshair flex items-center justify-center shadow-inner">
+                <div id="game-start-screen" class="text-center p-6 bg-white/90 backdrop-blur-sm rounded-2xl border border-yellow-200 max-w-sm shadow-lg">
+                    <svg class="w-16 h-16 fill-amber-500 mx-auto mb-3 animate-spin" style="animation-duration: 10s;" viewBox="0 0 24 24"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm0 18a8 8 0 110-16 8 8 0 010 16z"/></svg>
+                    <h3 class="text-2xl font-bold text-amber-950 mb-2">¿Lista, Luisa?</h3>
+                    <p class="text-xs text-amber-800 mb-4">¡Toca rápidamente todas las flores que caigan en la pantalla!</p>
+                    <button id="btn-start-game" class="px-8 py-3 bg-amber-500 hover:bg-amber-400 text-white font-extrabold rounded-full shadow-lg transition-all transform hover:scale-105 active:scale-95">
+                        ¡Comenzar Juego!
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- PUNTO 6: Creador/Generador de Promesas y Deseos -->
+        <section class="glass-card rounded-3xl p-8 border border-yellow-300 text-center space-y-6 shadow-xl">
+            <div class="max-w-xl mx-auto">
+                <div class="w-16 h-16 bg-yellow-300 rounded-full flex items-center justify-center mx-auto text-amber-950 mb-3 glow-effect">
+                    <svg class="w-8 h-8 fill-amber-950" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                </div>
+                <h2 class="text-3xl md:text-4xl font-serif-title font-bold text-amber-950">
+                    Cofre de Promesas Para Luisa 💫
+                </h2>
+                <p class="text-amber-800 text-sm mt-2">
+                    Genera un deseo o una promesa especial escrita exclusivamente para ti.
+                </p>
+
+                <div id="wish-display" class="min-h-[110px] flex items-center justify-center my-6 p-6 bg-white/90 rounded-2xl border border-yellow-200 shadow-inner transition-all duration-300">
+                    <p class="text-amber-950 font-serif-title text-lg md:text-xl font-medium italic">
+                        "Haz clic en el botón de abajo para revelar una promesa sincera..."
+                    </p>
+                </div>
+
+                <button id="btn-generate-wish" class="px-8 py-3.5 bg-gradient-to-r from-yellow-400 via-amber-400 to-yellow-500 text-amber-950 font-extrabold rounded-full shadow-lg hover:shadow-2xl hover:scale-105 active:scale-95 transition-all border border-yellow-300">
+                    💖 Revelar Nueva Promesa Para Luisa
+                </button>
+            </div>
+        </section>
+
+        <!-- PUNTO 11: Tarjetero de Recuerdos y Piropos Animados -->
+        <section class="glass-card rounded-3xl p-8 border border-yellow-300 text-center space-y-6 shadow-xl">
+            <div class="text-center">
+                <span class="text-xs font-bold text-amber-700 tracking-widest uppercase">Piropos y Palabras de Amor</span>
+                <h2 class="text-3xl md:text-4xl font-serif-title font-bold text-amber-950 mt-1">
+                    Detalles Que Me Enamoran De Ti ✨
+                </h2>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4" id="compliments-grid">
+                <!-- Dynamically inserted -->
+            </div>
+        </section>
+
+        <!-- Romantic Footer -->
+        <footer class="text-center space-y-4 pt-10 border-t border-amber-200">
+            <div class="flex justify-center gap-3 text-amber-500 animate-pulse-slow">
+                <svg class="w-8 h-8 fill-amber-500" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+            </div>
+            <h3 class="text-3xl md:text-5xl font-handwriting font-bold text-amber-950">
+                Te amo hoy, este 21 de septiembre y siempre, Luisa.
+            </h3>
+            <p class="text-xs text-amber-800 tracking-wider">
+                Creado especialmente para Luisa con todo el amor del mundo • Día de las Flores Amarillas
+            </p>
+        </footer>
+
+    </main>
+
+    <!-- JavaScript Engine -->
+    <script>
+        /* PUNTO 10: Canvas Background Animation of Falling Petals & Sparkles */
+        const canvas = document.getElementById('petals-canvas');
+        const ctx = canvas.getContext('2d');
+        let petals = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Petal {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height - canvas.height;
+                this.size = 8 + Math.random() * 12;
+                this.speedY = 1 + Math.random() * 2.5;
+                this.speedX = Math.sin(this.y * 0.01) * 1.5;
+                this.rotation = Math.random() * 360;
+                this.rotationSpeed = (Math.random() - 0.5) * 2;
+                this.color = ['#facc15', '#fef08a', '#eab308', '#fde047'][Math.floor(Math.random() * 4)];
+            }
+
+            update() {
+                this.y += this.speedY;
+                this.x += Math.sin(this.y * 0.01) * 0.8;
+                this.rotation += this.rotationSpeed;
+
+                if (this.y > canvas.height + 20) {
+                    this.y = -20;
+                    this.x = Math.random() * canvas.width;
+                }
+            }
+
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate((this.rotation * Math.PI) / 180);
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.ellipse(0, 0, this.size, this.size / 2, 0, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+
+        for (let i = 0; i < 40; i++) {
+            petals.push(new Petal());
+        }
+
+        function animatePetals() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            petals.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animatePetals);
+        }
+        animatePetals();
+
+        /* PUNTO 7: "Luz del Corazón" - SVG Vector Mouse Trail */
+        const svgFlowerString = `<svg class="w-full h-full fill-amber-400 drop-shadow" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg>`;
+        let lastTrail = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            const now = Date.now();
+            if (now - lastTrail > 70) {
+                lastTrail = now;
+                const trail = document.createElement('div');
+                trail.className = 'trail-flower';
+                trail.innerHTML = svgFlowerString;
+                trail.style.left = `${e.clientX - 12}px`;
+                trail.style.top = `${e.clientY - 12}px`;
+                document.body.appendChild(trail);
+                setTimeout(() => trail.remove(), 1200);
+            }
+        });
+
+        /* PUNTO 3: Timer Counter */
+        function startCounter() {
+            const startDate = new Date();
+            startDate.setFullYear(startDate.getFullYear() - 1); // Default relationship baseline
+
+            function update() {
+                const now = new Date();
+                const diff = now - startDate;
+
+                document.getElementById('days').innerText = Math.floor(diff / (1000 * 60 * 60 * 24));
+                document.getElementById('hours').innerText = Math.floor((diff / (1000 * 60 * 60)) % 24);
+                document.getElementById('minutes').innerText = Math.floor((diff / 1000 / 60) % 60);
+                document.getElementById('seconds').innerText = Math.floor((diff / 1000) % 60);
+            }
+            update();
+            setInterval(update, 1000);
+        }
+
+        /* 3. Virtual Garden Data */
+        const flowersData = [
+            { icon: '🌻', name: 'Girasol de Sol', msg: 'Tu sonrisa tiene la capacidad de iluminar hasta el día más oscuro.' },
+            { icon: '🌼', name: 'Margarita Dulce', msg: 'Amo la paz y la infinita ternura que me transmites con solo mirarme.' },
+            { icon: '🌷', name: 'Tulipán Dorado', msg: 'Estar a tu lado se siente como vivir en una eterna primavera llena de vida.' },
+            { icon: '🌹', name: 'Rosa Amarilla', msg: 'Eres la persona más valiosa, hermosa e increíble de todo el universo.' },
+            { icon: '🌻', name: 'Girasol de Alegría', msg: 'Cada instante que compartimos se convierte en un tesoro inolvidable para mi corazón.' },
+            { icon: '🌷', name: 'Tulipán del Amancer', msg: 'Haberte encontrado en esta vida es la bendición más grande que he recibido.' },
+            { icon: '🌼', name: 'Flor de la Promesa', msg: 'Prometo cuidarte, respetarte y amarte con locura en cada amanecer.' },
+            { icon: '🌻', name: 'Estrella de Primavera', msg: 'Eres mi sueño hecho realidad, mi hermoso presente y mi camino hacia el futuro.' }
+        ];
+
+        function renderGarden() {
+            const garden = document.getElementById('flower-garden');
+            garden.innerHTML = '';
+
+            flowersData.forEach((flower, idx) => {
+                const card = document.createElement('div');
+                card.className = 'glass-card-darker p-4 rounded-2xl text-center cursor-pointer hover:scale-105 transition-all duration-300 group border border-yellow-300 shadow-sm';
+                card.onclick = () => selectFlower(idx);
+
+                card.innerHTML = `
+                    <div class="text-4xl md:text-5xl mb-2 transform group-hover:rotate-12 group-hover:scale-110 transition-transform duration-300">${flower.icon}</div>
+                    <h4 class="text-xs md:text-sm font-bold text-amber-950">${flower.name}</h4>
+                    <span class="text-[10px] text-amber-800 bg-amber-200/70 px-2.5 py-0.5 rounded-full mt-2 inline-block font-semibold">Tocar Flor</span>
+                `;
+                garden.appendChild(card);
+            });
+        }
+
+        function selectFlower(index) {
+            const flower = flowersData[index];
+            const msgBox = document.getElementById('flower-message-box');
+            const msgText = document.getElementById('flower-message-text');
+            const badge = document.getElementById('flower-badge');
+
+            msgText.innerText = `"${flower.msg}"`;
+            badge.innerText = `${flower.name}`;
+            msgBox.classList.remove('hidden');
+
+            confetti({
+                particleCount: 35,
+                spread: 60,
+                origin: { y: 0.6 },
+                colors: ['#facc15', '#fef08a', '#eab308']
+            });
+        }
+
+        document.getElementById('btn-bloom-all').addEventListener('click', () => {
+            confetti({
+                particleCount: 150,
+                spread: 100,
+                origin: { y: 0.5 },
+                colors: ['#facc15', '#fef08a', '#eab308', '#ffffff']
+            });
+
+            const msgBox = document.getElementById('flower-message-box');
+            const msgText = document.getElementById('flower-message-text');
+            const badge = document.getElementById('flower-badge');
+
+            msgText.innerText = "¡Todo tu jardín floreció por completo, Luisa! Gracias por ser el amor de mi vida 💛🌻✨";
+            badge.innerText = "🌻 Ramo Eterno Florecido";
+            msgBox.classList.remove('hidden');
+        });
+
+        /* PUNTO 1: Interactive Envelope */
+        const envelope = document.getElementById('envelope');
+        envelope.addEventListener('click', () => {
+            envelope.classList.toggle('open');
+            if (envelope.classList.contains('open')) {
+                confetti({
+                    particleCount: 70,
+                    spread: 80,
+                    origin: { y: 0.7 }
+                });
+            }
+        });
+
+        /* PUNTO 4: Flip Cards Grid */
+        const reasons = [
+            { title: 'Tu Sonrisa Radiante', text: 'Tiene la magia de iluminar mi día entero en cuestión de un segundo.' },
+            { title: 'Tus Abrazos Cálidos', text: 'Son mi refugio favorito en todo el mundo. A tu lado siempre hay paz.' },
+            { title: 'Tu Forma de Ser', text: 'Tu dulzura, nobleza e inteligencia me enamoran cada día más, Luisa.' },
+            { title: 'Tus Ojos Llenos de Luz', text: 'Reflejan la hermosura sincera de tu alma, en la que me perdería mil veces.' },
+            { title: 'Tu Risa Contagiosa', text: 'Es la melodía más hermosa que existe en todo mi universo.' },
+            { title: 'Simplemente Tú, Luisa', text: 'Porque no existe nadie como tú en este planeta. Eres perfecta para mí.' }
+        ];
+
+        function renderReasons() {
+            const grid = document.getElementById('reasons-grid');
+            grid.innerHTML = '';
+
+            reasons.forEach((reason, index) => {
+                const flipCard = document.createElement('div');
+                flipCard.className = 'flip-card h-52 cursor-pointer';
+                flipCard.onclick = () => flipCard.classList.toggle('flipped');
+
+                flipCard.innerHTML = `
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front glass-card p-6 flex flex-col justify-center items-center border border-yellow-300 shadow-md">
+                            <span class="w-10 h-10 bg-amber-200 text-amber-950 font-bold rounded-full flex items-center justify-center text-sm mb-3 shadow-sm">#${index+1}</span>
+                            <h3 class="text-xl font-bold font-serif-title text-amber-950">${reason.title}</h3>
+                            <p class="text-xs text-amber-800 mt-2 font-medium">Toca para voltear 🔄</p>
+                        </div>
+                        <div class="flip-card-back bg-gradient-to-br from-amber-400 via-yellow-400 to-amber-500 text-amber-950 p-6 flex flex-col justify-center items-center rounded-2xl shadow-xl border border-yellow-200">
+                            <p class="text-sm md:text-base font-semibold leading-relaxed">${reason.text}</p>
+                            <span class="text-xs font-black mt-4 text-amber-950 tracking-wider">💛 AMOR INFINITO</span>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(flipCard);
+            });
+        }
+
+        /* PUNTO 9: Timeline Chapters Accordion */
+        const chapters = [
+            { title: 'El Día Que Te Conocí', text: 'El instante en que te vi por primera vez, Luisa, supe que mi mundo nunca volvería a ser el mismo.' },
+            { title: 'Nuestra Primera Risa Juntos', text: 'Ese momento en que nos reímos sin parar y entendí lo fácil que era ser feliz a tu lado.' },
+            { title: 'Cada Abrazo Compartido', text: 'Momentos en los que el tiempo se detiene y solo existimos tú y yo.' },
+            { title: 'Nuestro Presente y Futuro', text: 'Este 21 de septiembre es solo una muestra de los miles de días que quiero celebrar a tu lado.' }
+        ];
+
+        function renderTimeline() {
+            const container = document.getElementById('timeline-accordion');
+            container.innerHTML = '';
+
+            chapters.forEach((item, index) => {
+                const wrapper = document.createElement('div');
+                wrapper.className = 'bg-white/80 rounded-2xl border border-yellow-200 overflow-hidden shadow-sm transition-all';
+
+                wrapper.innerHTML = `
+                    <button class="w-full text-left p-4 font-bold text-amber-950 flex justify-between items-center gap-2 hover:bg-amber-100/50 transition-colors" onclick="toggleChapter(${index})">
+                        <span class="font-serif-title text-base md:text-lg">Capítulo ${index + 1}: ${item.title}</span>
+                        <i class="fas fa-chevron-down text-amber-600 text-xs transition-transform" id="chapter-icon-${index}"></i>
+                    </button>
+                    <div class="hidden p-4 pt-0 text-sm text-slate-700 font-serif leading-relaxed border-t border-amber-100" id="chapter-body-${index}">
+                        ${item.text}
+                    </div>
+                `;
+                container.appendChild(wrapper);
+            });
+        }
+
+        function toggleChapter(idx) {
+            const body = document.getElementById(`chapter-body-${idx}`);
+            const icon = document.getElementById(`chapter-icon-${idx}`);
+
+            body.classList.toggle('hidden');
+            icon.classList.toggle('rotate-180');
+        }
+
+        /* PUNTO 6: Promises Generator */
+        const wishes = [
+            "Prometo escucharte siempre y apoyarte en cada uno de tus sueños, Luisa.",
+            "Que en cada 21 de septiembre tengamos mil recuerdos hermosos más para celebrar.",
+            "Deseo un viaje inolvidable juntos a un lugar donde solo exista nuestra felicidad.",
+            "Prometo sacarte una sonrisa sincera incluso en los días en que te sientas cansada.",
+            "Que nuestro amor siga creciendo radiante y fuerte como un campo de girasoles.",
+            "Deseo infinitas tardes de abrazos, risas y miradas que lo dicen todo."
+        ];
+
+        document.getElementById('btn-generate-wish').addEventListener('click', () => {
+            const display = document.getElementById('wish-display');
+            const randomWish = wishes[Math.floor(Math.random() * wishes.length)];
+
+            display.style.opacity = '0';
+            setTimeout(() => {
+                display.innerHTML = `<p class="text-amber-950 font-serif-title text-xl md:text-2xl font-bold italic">"${randomWish}"</p>`;
+                display.style.opacity = '1';
+            }, 200);
+
+            confetti({
+                particleCount: 45,
+                spread: 70,
+                origin: { y: 0.8 },
+                colors: ['#facc15', '#fef08a']
+            });
+        });
+
+        /* PUNTO 11: Compliments Cards */
+        const compliments = [
+            "Eres el sol que alegra mis mañanas.",
+            "Tu inteligencia y dulzura me admiran.",
+            "Tienes la voz más pacífica del mundo.",
+            "Tu mirada refleja la nobleza de tu alma.",
+            "Haces que cualquier día común sea mágico.",
+            "Eres el regalo más bonito de mi vida."
+        ];
+
+        function renderCompliments() {
+            const grid = document.getElementById('compliments-grid');
+            grid.innerHTML = '';
+
+            compliments.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'bg-amber-100/80 p-4 rounded-xl border border-amber-200 text-amber-950 font-serif italic text-sm shadow-sm hover:scale-105 transition-transform';
+                card.innerText = `"${item}"`;
+                grid.appendChild(card);
+            });
+        }
+
+        /* PUNTO 5: Mini-Game logic with SVGs */
+        let gameScore = 0;
+        let gameCombo = 1;
+        let gameTimeLeft = 20;
+        let gameInterval = null;
+        let flowerSpawnInterval = null;
+
+        const gameContainer = document.getElementById('game-container');
+        const scoreDisplay = document.getElementById('game-score');
+        const comboDisplay = document.getElementById('game-combo');
+        const timerDisplay = document.getElementById('game-timer');
+        const startBtn = document.getElementById('btn-start-game');
+
+        startBtn.addEventListener('click', startGame);
+
+        function startGame() {
+            gameScore = 0;
+            gameCombo = 1;
+            gameTimeLeft = 20;
+
+            scoreDisplay.innerText = gameScore;
+            comboDisplay.innerText = `x${gameCombo}`;
+            timerDisplay.innerText = gameTimeLeft;
+
+            gameContainer.innerHTML = '';
+
+            gameInterval = setInterval(() => {
+                gameTimeLeft--;
+                timerDisplay.innerText = gameTimeLeft;
+
+                if (gameTimeLeft <= 0) {
+                    endGame();
+                }
+            }, 1000);
+
+            flowerSpawnInterval = setInterval(spawnGameFlower, 450);
+        }
+
+        function spawnGameFlower() {
+            if (gameTimeLeft <= 0) return;
+
+            const flower = document.createElement('div');
+            flower.className = 'absolute w-10 h-10 cursor-pointer select-none transition-transform active:scale-125';
+            flower.innerHTML = `<svg class="w-full h-full fill-amber-500 drop-shadow" viewBox="0 0 24 24"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm0 15a5 5 0 110-10 5 5 0 010 10z"/></svg>`;
+
+            const x = Math.random() * (gameContainer.clientWidth - 50);
+            const y = Math.random() * (gameContainer.clientHeight - 50);
+
+            flower.style.left = `${x}px`;
+            flower.style.top = `${y}px`;
+
+            flower.onclick = (e) => {
+                e.stopPropagation();
+                gameScore += 10 * gameCombo;
+                gameCombo = Math.min(gameCombo + 1, 5);
+
+                scoreDisplay.innerText = gameScore;
+                comboDisplay.innerText = `x${gameCombo}`;
+
+                const pop = document.createElement('span');
+                pop.innerText = `+${10 * gameCombo}`;
+                pop.className = 'absolute text-xs font-black text-amber-900 animate-ping';
+                pop.style.left = `${x}px`;
+                pop.style.top = `${y}px`;
+                gameContainer.appendChild(pop);
+                setTimeout(() => pop.remove(), 400);
+
+                flower.remove();
+            };
+
+            gameContainer.appendChild(flower);
+
+            setTimeout(() => {
+                if (flower.parentNode) {
+                    gameCombo = 1;
+                    comboDisplay.innerText = `x${gameCombo}`;
+                    flower.remove();
+                }
+            }, 1000);
+        }
+
+        function endGame() {
+            clearInterval(gameInterval);
+            clearInterval(flowerSpawnInterval);
+
+            gameContainer.innerHTML = `
+                <div class="text-center p-6 bg-white/95 backdrop-blur-md rounded-2xl border border-yellow-300 max-w-md shadow-xl">
+                    <h3 class="text-3xl font-bold text-amber-950 mb-2">¡Tiempo Agotado! 🎉</h3>
+                    <p class="text-amber-900 text-lg mb-2">Juntaste <span class="font-extrabold text-3xl text-amber-600">${gameScore}</span> puntos de amor para Luisa</p>
+                    <p class="text-sm text-amber-800 font-serif italic mb-5">"¡Has cosechado el ramo digital más hermoso del mundo!"</p>
+                    <button onclick="startGame()" class="px-8 py-3 bg-amber-500 text-white font-extrabold rounded-full hover:bg-amber-400 shadow-lg transition-all transform hover:scale-105">
+                        Jugar de Nuevo 🌻
+                    </button>
+                </div>
+            `;
+
+            confetti({
+                particleCount: 120,
+                spread: 90,
+                origin: { y: 0.6 }
+            });
+        }
+
+        /* PUNTO 8: Reproductor de Música de Amor en Español */
+        const audio = document.getElementById('spanish-love-song');
+        const playBtn = document.getElementById('music-play-btn');
+        const playIcon = document.getElementById('music-play-icon');
+        const progressBar = document.getElementById('music-progress-bar');
+        const progressContainer = document.getElementById('music-progress-container');
+        const volumeInput = document.getElementById('music-volume');
+
+        playBtn.addEventListener('click', () => {
+            if (audio.paused) {
+                audio.play();
+                playIcon.className = 'fas fa-pause text-sm';
+            } else {
+                audio.pause();
+                playIcon.className = 'fas fa-play text-sm ml-0.5';
+            }
+        });
+
+        audio.addEventListener('timeupdate', () => {
+            if (audio.duration) {
+                const pct = (audio.currentTime / audio.duration) * 100;
+                progressBar.style.width = `${pct}%`;
+            }
+        });
+
+        progressContainer.addEventListener('click', (e) => {
+            const rect = progressContainer.getBoundingClientRect();
+            const clickX = e.clientX - rect.left;
+            const pct = clickX / rect.width;
+            audio.currentTime = pct * audio.duration;
+        });
+
+        volumeInput.addEventListener('input', (e) => {
+            audio.volume = e.target.value;
+        });
+
+        /* Page Initializer */
+        window.onload = () => {
+            startCounter();
+            renderGarden();
+            renderReasons();
+            renderTimeline();
+            renderCompliments();
+        };
+    </script>
+</body>
+</html>
